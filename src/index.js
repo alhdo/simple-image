@@ -14,6 +14,7 @@ require('./index.css').toString();
  * @property {boolean} withBorder - should image be rendered with border
  * @property {boolean} withBackground - should image be rendered with background
  * @property {boolean} stretched - should image be stretched to full width of container
+ * @property {boolean} base64 - should base64 image pasted enabled
  */
 class SimpleImage {
   /**
@@ -31,6 +32,9 @@ class SimpleImage {
      */
     this.api = api;
     this.readOnly = readOnly;
+    this.config = {
+      base64: config.base64 || true,
+    }
 
     /**
      * When block is only constructing,
@@ -238,7 +242,7 @@ class SimpleImage {
         break;
       }
 
-      case 'file': {
+      case 'file' && this.config.base64: {
         const { file } = event.detail;
 
         this.onDropHandler(file)
